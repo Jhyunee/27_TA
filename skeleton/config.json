@@ -1,0 +1,1 @@
+{"fields":[{"key":"recommended","label":"Recommended","type":"Boolean","selected":true,"required":true},{"key":"review_date","label":"Review date","type":"Date · UTC","selected":true,"required":true},{"key":"review_text","label":"Review text","type":"Text","selected":true,"required":true}],"lab":{"fieldSelection":false,"dateRange":false,"pagination":false},"maxFields":10}

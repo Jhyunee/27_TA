@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Review Lab · Completed Example Preview</title>
+  <meta name="description" content="A hands-on review collection lab. Build a dataset, explore real player reviews, and ask your own questions.">
+  <link rel="icon" href="./favicon.svg"><link rel="stylesheet" href="./style.css">
+  <script src="./insights.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+<header class="topbar"><div class="brand"><img src="./favicon.svg" alt="" width="34" height="34"><span>review<span class="brand-light">lab</span><span class="brand-dot">.</span></span></div><div class="course">W6 <span>/</span> VIBE CODING <span class="local-badge"><i></i> Completed Example</span></div></header>
+<nav class="demo-nav" aria-label="Example previews"><span class="demo-label">W6 · SCREEN PREVIEW</span><a href="../skeleton/" >Student exercise</a><a href="../complete/" aria-current="page">Completed example</a></nav><main>
+  <section class="intro"><div><p class="eyebrow">A SMALL DATASET. A GOOD QUESTION.</p><h1>Every review has a story.</h1><p class="intro-copy">Collect real reviews. Find a pattern. Make it visible.</p></div><div class="workflow" aria-label="Lab workflow"><span><b>01</b> Collect</span><i>→</i><span><b>02</b> Explore</span><i>→</i><span><b>03</b> Analyze</span></div></section>
+  <div class="demo-banner" role="note"><div><strong>Completed example</strong><p>Explore 300 saved reviews in the table, review explorer, and Insights. Live collection is available in the local app.</p></div></div><div class="workspace">
+    <aside class="collection-column" aria-label="Collection settings">
+      <div class="workspace-heading collection-heading"><div><p class="eyebrow"><span class="stage-marker">A</span> COLLECT</p><h2>Build your dataset<span class="brand-dot">.</span></h2><p class="heading-caption">Choose what to collect.</p></div><span class="stage-arrow" aria-hidden="true">→</span></div>
+      <div class="setup panel">
+      <form id="collect-form">
+        <fieldset id="settings" disabled>
+          <div class="section-label"><span class="step">1</span><label for="product-url">Choose a game</label><span class="source-label">STEAM</span></div>
+          <textarea id="product-url" rows="2" aria-label="Steam game URL" spellcheck="false" placeholder="Paste a Steam game URL" required></textarea>
+          <div class="url-actions"><button type="button" id="use-example" class="text-button">Use Stardew Valley</button><button id="inspect" type="button" class="button secondary small"><span data-icon="scan"></span><span>Inspect game</span></button></div>
+          <div id="product-preview" class="product-preview" hidden></div>
+          <div class="section-divider"></div>
+          <div class="section-label"><span class="step">2</span><span>Pick your fields</span><span id="field-count" class="muted trailing"></span></div>
+          <p class="help" id="field-help">The selected fields are included in this saved sample.</p>
+          <div id="fields" class="field-grid"></div>
+          <p class="micro">Review IDs and collection details are always kept for reference.</p>
+          <div class="section-divider"></div>
+          <div class="section-label"><span class="step">3</span><span>Set your scope</span></div>
+          <div class="date-presets" aria-label="Review date presets"><button type="button" data-days="0" class="active">All time</button><button type="button" data-days="30">Last 30 days</button><button type="button" data-days="90">Last 90 days</button></div>
+          <div class="two-columns"><label class="control-label" for="start-date">From<input id="start-date" type="date"></label><label class="control-label" for="end-date">To<input id="end-date" type="date"></label></div>
+          <div class="limit-row"><label for="review-limit">Maximum reviews</label><select id="review-limit"><option value="20">20 · quick test</option><option value="50">50</option><option value="100" selected>100</option><option value="300">300</option><option value="500">500</option></select></div>
+          <p class="micro">Newest first, within your dates. Dates use UTC and include both endpoints.</p>
+          <button id="collect" type="submit" class="button primary collect-button" disabled><span data-icon="download"></span><span>Saved sample · no live collection</span><span class="arrow">→</span></button>
+        </fieldset>
+      </form>
+      <div id="progress" class="progress-box" role="status" aria-live="polite" hidden><div class="progress-top"><span class="spinner"></span><strong id="progress-title">Collecting reviews</strong><button type="button" id="cancel" class="text-button">Stop</button></div><div class="progress-track"><span id="progress-bar"></span></div><p id="progress-text">Connecting to Steam…</p></div>
+      <div id="message" role="status" aria-live="polite" hidden></div>
+      <p class="setup-footer"><span data-icon="refresh"></span> Collection controls are shown for reference in this preview.</p>
+      </div>
+    </aside>
+
+    <section class="results" aria-label="Collected reviews">
+      <div class="workspace-heading results-heading"><div><p class="eyebrow"><span class="stage-marker">B</span> EXPLORE</p><h2>Meet your data<span class="brand-dot">.</span></h2><p class="heading-caption">Turn reviews into observations.</p></div><button type="button" id="export" class="button secondary" disabled title="Export all collected reviews, including rows hidden by filters"><span data-icon="download"></span>Export CSV</button></div>
+      <div class="data-panel panel">
+        <div class="tabs" role="tablist" aria-label="Dataset views"><button type="button" role="tab" id="tab-table" aria-controls="view-table" aria-selected="true" data-tab="table"><span data-icon="table"></span>Data table</button><button type="button" role="tab" id="tab-cards" aria-controls="view-cards" aria-selected="false" data-tab="cards"><span data-icon="cards"></span>Review explorer</button><button type="button" role="tab" id="tab-analysis" aria-controls="view-analysis" aria-selected="false" data-tab="analysis"><span data-icon="chart"></span>Insights<span class="tab-tag">LAB +</span></button></div>
+        <div id="dataset-meta" class="dataset-meta" hidden></div>
+        <div id="toolbar" class="toolbar" hidden><div id="review-search" class="search" hidden><span data-icon="search"></span><input id="search" type="search" aria-label="Search collected reviews" placeholder="Search your reviews…"></div><select id="rating-filter" aria-label="Filter by recommendation"><option value="">All reviews</option><option value="true">Recommended</option><option value="false">Not recommended</option></select><select id="sort" aria-label="Sort reviews"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="longest">Most playtime</option><option value="shortest">Least playtime</option><option value="helpful">Most helpful</option></select></div>
+        <div id="empty" class="empty"><div class="empty-illustration"><span class="mini-row"><i></i><i></i><i></i></span><span class="mini-row"><i></i><i></i><i></i></span><span class="mini-row"><i></i><i></i><i></i></span><span class="float-star">✦</span></div><p class="eyebrow">LET’S START WITH A QUESTION</p><h3>What makes a game worth playing?</h3><p>Bring in player reviews and see for yourself.<br>Use “Load 20 sample reviews” to explore this preview.</p><div class="empty-hints"><span>Choose your fields</span><i>→</i><span>Collect</span><i>→</i><span>Explore</span></div></div>
+        <div id="view-table" role="tabpanel" aria-labelledby="tab-table" hidden><div class="table-scroll"><table id="review-table"><thead></thead><tbody></tbody></table></div></div>
+        <div id="view-cards" role="tabpanel" aria-labelledby="tab-cards" class="review-grid" hidden></div>
+        <div id="view-analysis" role="tabpanel" aria-labelledby="tab-analysis" hidden></div>
+        <div id="no-matches" class="no-matches" hidden><span data-icon="search"></span><h3>No reviews match these filters.</h3><p>Try another keyword or recommendation.</p><button type="button" id="clear-filters" class="text-button">Clear filters</button></div>
+        <div id="table-footer" class="table-footer" hidden><span id="showing"></span><div class="pagination"><button type="button" id="prev-page" aria-label="Previous results page">←</button><span id="page-number"></span><button type="button" id="next-page" aria-label="Next results page">→</button></div></div>
+      </div>
+      <div class="workspace-note"><span data-icon="info"></span><p>Look closely: playtime, free copies, and Early Access reviews add context to a recommendation.</p></div>
+    </section>
+  </div>
+  <footer class="page-footer"><span>REVIEW LAB <span class="brand-dot">/</span> LEARN BY MAKING</span><span>One game. Your questions. Real data.</span></footer>
+</main>
+<dialog id="review-dialog"><button type="button" id="close-dialog" class="dialog-close" aria-label="Close review">×</button><div id="dialog-content"></div></dialog>
+</body></html>
